@@ -5,18 +5,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import br.com.alura.jpa.modelo.dao.MovimentacaoDao;
+
 public class TesteSomaDasMovimentacoes {
 
 	public static void main(String[] args) {
+
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("alura");
 		EntityManager em = emf.createEntityManager();
 
-		String jpql = "select avg(m.valor) from Movimentacao m";
-
-		TypedQuery<Double> query = em.createQuery(jpql, Double.class);
-		Double somaDasMovimentacoes = query.getSingleResult();
-
-		System.out.println("A média das movimentações é: " + somaDasMovimentacoes);
+		MovimentacaoDao dao = new MovimentacaoDao(em);
+		System.out.println("A soma das movimentações é: " + dao.getSomaDasMovimentacoes());
 
 	}
 }
